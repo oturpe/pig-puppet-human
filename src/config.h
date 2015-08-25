@@ -5,8 +5,11 @@
 #define LOOP_DELAY 50
 
 // Half length of indicator led on-off sequence. In other words, the time
-// the indicator is lit of darkened. Given in units of LOOP_DELAY
+// the indicator is lit of darkened. Given in units of LOOP_DELAY.
 #define INDICATOR_HALF_PERIOD 10
+
+// Delay to detect pig movement from ldr's. Given in units of LOOP_DELAY.
+#define LDR_DELAY 10
 
 //Enables debug messaging
 #define DEBUG

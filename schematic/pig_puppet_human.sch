@@ -1,11 +1,11 @@
 <Qucs Schematic 0.0.18>
 <Properties>
-  <View=-89,-36,786,843,1,0,62>
+  <View=-89,-56,667,825,0.680877,0,0>
   <Grid=10,10,1>
-  <DataSet=pig_pupped_human.dat>
-  <DataDisplay=pig_pupped_human.dpl>
+  <DataSet=pig_puppet_human.dat>
+  <DataDisplay=pig_puppet_human.dpl>
   <OpenDisplay=1>
-  <Script=pig_pupped_human.m>
+  <Script=pig_puppet_human.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>
@@ -50,10 +50,7 @@
   <Vdc V_logic 1 530 150 18 -26 0 1 "5 V" 1>
   <GND * 1 530 180 0 0 0 0>
   <Lib OP1 1 230 300 -70 -84 0 2 "OpAmps" 0 "tl081(TI)" 0>
-  <Port Out_neg 1 20 140 -69 -42 0 0 "1" 0 "analog" 0>
-  <Port Out_pos 1 20 300 -74 -37 0 0 "2" 0 "analog" 0>
   <Port P1 1 20 440 -44 -31 0 0 "3" 0 "analog" 0>
-  <Port P3 1 20 620 -45 -37 0 0 "5" 0 "analog" 0>
   <Lib D2 1 110 200 -23 20 0 0 "LEDs" 0 "red" 0>
   <Lib D3 1 110 360 -23 20 0 0 "LEDs" 0 "red" 0>
   <GND * 1 20 380 0 0 0 0>
@@ -61,6 +58,9 @@
   <R R12 1 50 360 -35 -50 0 2 "1 kOhm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <R R11 1 50 200 -38 -49 0 2 "1 kOhm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <Port PB0 1 20 700 -51 -32 0 0 "4" 0 "analog" 0>
+  <Port PB3 1 20 140 -69 -42 0 0 "1" 0 "analog" 0>
+  <Port PB4 1 20 300 -51 -37 0 0 "2" 0 "analog" 0>
+  <Port PB2 1 20 620 -53 -37 0 0 "5" 0 "analog" 0>
 </Components>
 <Wires>
   <170 700 170 760 "" 0 0 0 "">

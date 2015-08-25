@@ -16,6 +16,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "PolledXorDetector.h"
+
 #ifdef DEBUG
 #include "Debug.h"
 #endif
@@ -44,11 +46,16 @@ int main() {
   // Set pin B0 as output (indicator)
   DDRB |= BV(DDB0);
 
+  PolledXorDetector pigDetector(&PINB, PINB3, PINB4, LDR_DELAY);
+
   bool indicatorLit = false;
+  bool pigDetected = false;
   uint16_t counter = 0;
   while(true) {
     counter += 1;
     _delay_ms(LOOP_DELAY);
+
+    pigDetected = pigDetector.poll();
 
     if(counter % INDICATOR_HALF_PERIOD == 0) {
       indicatorLit = !indicatorLit;
