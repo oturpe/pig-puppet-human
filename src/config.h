@@ -11,5 +11,9 @@
 // Delay to detect pig movement from ldr's. Given in units of LOOP_DELAY.
 #define LDR_DELAY 10
 
+// Delay to inactive human after is has been activated. Given in units of
+// LOOP_DELAY.
+#define HUMAN_DELAY 100
+
 //Enables debug messaging
 #define DEBUG

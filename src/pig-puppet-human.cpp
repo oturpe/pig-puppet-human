@@ -16,8 +16,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "PolledXorDetector.h"
-
 #ifdef DEBUG
 #include "Debug.h"
 #endif
@@ -26,40 +24,74 @@
 ///
 /// \param lit
 ///    If led is turned on. Otherwise it is turned off.
-void setIndicator(bool lit) {
+inline void setIndicator(bool lit) {
   if (lit)
     PORTB |= BV(PORTB0);
   else
     PORTB &= ~BV(PORTB0);
 }
 
-int main() {
-  // Wait for powr supply capacitors to charge etc.
-  //_delay_ms(1000);
+// How many more sensors until presence of pig is detected
+uint8_t pigDetectionDelay = LDR_DELAY;
 
-  #ifdef DEBUG
-    /* TODO: implement debugging
-    Debug debug(DEBUG_FREQ);
-    */
-  #endif
-
-  // Set pin B0 as output (indicator)
-  DDRB |= BV(DDB0);
-
-  PolledXorDetector pigDetector(&PINB, PINB3, PINB4, LDR_DELAY);
-
-  bool indicatorLit = false;
-  bool pigDetected = false;
-  uint16_t counter = 0;
-  while(true) {
-    counter += 1;
-    _delay_ms(LOOP_DELAY);
-
-    pigDetected = pigDetector.poll();
-
-    if(counter % INDICATOR_HALF_PERIOD == 0) {
-      indicatorLit = !indicatorLit;
-      setIndicator(indicatorLit);
+/// \brief
+///    Tracks if light dependent resistors have had different exposure LDR_DELAY
+///    times consecutively. This is interpreted to mean that pig has appeared in
+///    front of human.
+///
+/// \return
+///    If pig is detected
+inline bool pollSensors() {
+    if((PINB & BV(PINB3)) ^ (PINB & BV(PINB4))) {
+        if(pigDetectionDelay > 0) {
+            pigDetectionDelay--;
+        }
+    } else {
+        pigDetectionDelay = LDR_DELAY;
     }
-  }
+
+    return pigDetectionDelay == 0;
+}
+
+uint16_t humanInactivityDelay = 0;
+
+inline void runHuman() {
+    if(humanInactivityDelay > 0) {
+        humanInactivityDelay--;
+        PORTB |= BV(PORTB1) | BV(PORTB2);
+        // TODO: Implement running the motor. Pwm needed? Hall switch needed?
+        return;
+    }
+
+    PORTB &= ~BV(PORTB1) & ~BV(PORTB2);
+}
+
+int main() {
+    #ifdef DEBUG
+        /* TODO: implement debugging
+        Debug debug(DEBUG_FREQ);
+        */
+    #endif
+
+    // Set output pins: B0 (indicator), B1 (motor), B2 (lamp)
+    DDRB |= BV(DDB0) | BV(DDB1) | BV(DDB2);
+
+    bool indicatorLit = false;
+    uint16_t counter = 0;
+    while(true) {
+        counter += 1;
+        _delay_ms(LOOP_DELAY);
+
+        // Read sensors and re-activate human if pig is detected
+        if(pollSensors()) {
+            humanInactivityDelay = HUMAN_DELAY;
+        }
+
+        runHuman();
+
+        if(counter % INDICATOR_HALF_PERIOD == 0) {
+            indicatorLit = !indicatorLit;
+            setIndicator(indicatorLit);
+        }
+    }
 }
