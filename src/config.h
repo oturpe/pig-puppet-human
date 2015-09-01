@@ -15,5 +15,8 @@
 // LOOP_DELAY.
 #define HUMAN_DELAY 100
 
+// Pwm duty cycle for running the motor. 0 is 0 %, 255 is 100 %.
+#define HUMAN_MOTOR_DUTY_CYCLE 100
+
 //Enables debug messaging
 #define DEBUG

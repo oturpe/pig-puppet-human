@@ -59,11 +59,12 @@ inline void runHuman() {
     if(humanInactivityDelay > 0) {
         humanInactivityDelay--;
         PORTB |= BV(PORTB1) | BV(PORTB2);
-        // TODO: Implement running the motor. Pwm needed? Hall switch needed?
+        OCR0B = 0xff - HUMAN_MOTOR_DUTY_CYCLE;
         return;
     }
 
     PORTB &= ~BV(PORTB1) & ~BV(PORTB2);
+    OCR0B = 0xff;
 }
 
 int main() {
@@ -75,6 +76,14 @@ int main() {
 
     // Set output pins: B0 (indicator), B1 (motor), B2 (lamp)
     DDRB |= BV(DDB0) | BV(DDB1) | BV(DDB2);
+
+    // Initialize non-inverted pwm in pin OC0B (PB1)
+    TCCR0A |= BV(WGM01) | BV(WGM00);
+    TCCR0A |= BV(COM0B1);
+    Attiny13::setTimer0Prescaler(Attiny13::PSV_64);
+
+    // Initialize human as not doing anything.
+    OCR0B = 0xff;
 
     bool indicatorLit = false;
     uint16_t counter = 0;
