@@ -1,0 +1,2 @@
+Power supply
+- 5 A (maybe printer?) power supply did not work without 1 mF bypass capacitor.
