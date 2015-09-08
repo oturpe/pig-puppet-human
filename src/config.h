@@ -9,14 +9,14 @@
 #define INDICATOR_HALF_PERIOD 10
 
 // Delay to detect pig movement from ldr's. Given in units of LOOP_DELAY.
-#define LDR_DELAY 10
+#define LDR_DELAY 3
 
 // Delay to inactive human after is has been activated. Given in units of
 // LOOP_DELAY.
-#define HUMAN_DELAY 100
+#define HUMAN_DELAY 180
 
 // Pwm duty cycle for running the motor. 0 is 0 %, 255 is 100 %.
-#define HUMAN_MOTOR_DUTY_CYCLE 100
+#define HUMAN_MOTOR_DUTY_CYCLE 200
 
 //Enables debug messaging
 #define DEBUG
