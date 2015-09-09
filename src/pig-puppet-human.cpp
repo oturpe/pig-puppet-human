@@ -56,11 +56,22 @@ inline bool pollSensors() {
 uint16_t humanInactivityDelay = 0;
 
 inline void runHuman() {
+    static uint8_t flashCounter = 0;
+
     if(humanInactivityDelay > 0) {
         humanInactivityDelay--;
-        PORTB |= BV(PORTB1) | BV(PORTB2);
-        OCR0B = 0xff - HUMAN_MOTOR_DUTY_CYCLE;
-        return;
+
+        flashCounter++;
+
+        if(flashCounter % 10 > 5 || flashCounter % 7 > 5) {
+            PORTB |= BV(PORTB1) | BV(PORTB2);
+            OCR0B = 0xff - HUMAN_MOTOR_DUTY_CYCLE;
+            return;
+        } else {
+            PORTB &= ~BV(PORTB1) & ~BV(PORTB2);
+            OCR0B = 0xff;
+            return;
+        }
     }
 
     PORTB &= ~BV(PORTB1) & ~BV(PORTB2);
