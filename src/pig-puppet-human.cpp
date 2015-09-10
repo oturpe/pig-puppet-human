@@ -63,7 +63,7 @@ inline void runHuman() {
 
         flashCounter++;
 
-        if(flashCounter % 10 > 5 || flashCounter % 7 > 5) {
+        if(flashCounter % 30 > 13 || flashCounter % 28 > 23 || flashCounter % 7 > 5) {
             PORTB |= BV(PORTB1) | BV(PORTB2);
             OCR0B = 0xff - HUMAN_MOTOR_DUTY_CYCLE;
             return;
