@@ -5,15 +5,15 @@
 #define LOOP_DELAY 50
 
 // Half length of indicator led on-off sequence. In other words, the time
-// the indicator is lit of darkened. Given in units of LOOP_DELAY.
+// the indicator is lit and darkened. Given in units of LOOP_DELAY.
 #define INDICATOR_HALF_PERIOD 10
 
 // Delay to detect pig movement from ldr's. Given in units of LOOP_DELAY.
 #define LDR_DELAY 3
 
-// Delay to inactive human after is has been activated. Given in units of
+// Delay to inactivate human after is has been activated. Given in units of
 // LOOP_DELAY.
-#define HUMAN_DELAY 180
+#define HUMAN_DELAY 360
 
 // Pwm duty cycle for running the motor. 0 is 0 %, 255 is 100 %.
 #define HUMAN_MOTOR_DUTY_CYCLE 200
